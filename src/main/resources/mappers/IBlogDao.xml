@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.matrix.dao.IBlogDao">
+    <resultMap id="blogResult" type="blog">
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="summary" column="summary"/>
+        <result property="releaseDate" column="releaseDate"/>
+        <result property="releaseDateStr" column="releaseDateStr"/>
+        <result property="clickHit" column="clickHit"/>
+        <result property="replyHit" column="replyHit"/>
+        <result property="content" column="content"/>
+        <result property="status" column="status"/>
+        <result property="keyword" column="keyword"/>
+        <association property="blogType" javaType="blogType" column="typeId" select="com.matrix.dao.IBlogTypeDao.findTypeById"/>
+    </resultMap>
+
+    <select id="findAllBlog" resultMap="blogResult">
+        SELECT
+            date_format(releaseDate,'%Y年%m月') AS releaseDateStr,
+            COUNT(*) AS blogCount
+        FROM
+            m_blog
+        GROUP BY
+            releaseDateStr
+        ORDER BY
+            releaseDateStr
+        DESC
+    </select>
+
+    <select id="findBlogById" parameterType="integer" resultMap="blogResult">
+        SELECT
+            *
+        FROM
+            m_blog
+        WHERE
+            id=#{blogId}
+    </select>
+
+    <select id="findBlogByMap" parameterType="Map" resultMap="blogResult">
+        SELECT
+            *
+        FROM
+            m_blog
+        <where>
+            <if test="title!=null and title!=''">
+                AND
+                title LIKE '%${title}%'
+            </if>
+            <if test="typeId!=null">
+                AND
+                typeId = #{typeId}
+            </if>
+            <if test="releaseDateStr!=null and releaseDateStr!=''">
+                AND
+                date_format(releaseDate,'%Y年%m月') = #{releaseDateStr}
+            </if>
+            <if test="status!=null">
+                AND
+                status = #{status}
+            </if>
+        </where>
+        ORDER BY
+            releaseDate
+        DESC
+        <if test="start!=null and size!=null">
+            LIMIT #{start},#{size}
+        </if>
+    </select>
+
+    <select id="findCountOfBlogByMap" parameterType="Map" resultType="Long">
+        SELECT
+            COUNT(*)
+        FROM
+            m_blog
+        <where>
+            <if test="title!=null and title!=''">
+                AND
+                title LIKE '%${title}%'
+            </if>
+            <if test="typeId!=null and typeId!=''">
+                AND
+                title = #{typeId}
+            </if>
+            <if test="releaseDateStr!=null and releaseDateStr!=''">
+                AND
+                date_format(releaseDate,'%Y年%m月') = #{releaseDateStr}
+            </if>
+        </where>
+    </select>
+
+    <insert id="addBlog" parameterType="blog" useGeneratedKeys="true" keyProperty="id" >
+        INSERT INTO
+            m_blog(id,title,summary,releaseDate,clickHit,replyHit,content,typeId,keyword,status)
+        VALUES(null,#{title},#{summary},now(),0,0,#{content},#{blogType.id},#{keyword},0)
+    </insert>
+
+    <update id="updateBlog" parameterType="blog">
+        UPDATE
+            m_blog
+        <set>
+            <if test="title!=null and title!=''">
+                title=#{title},
+            </if>
+            <if test="summary!=null and summary!=''">
+                summary=#{summary},
+            </if>
+            <if test="clickHit!=null">
+                clickHit=#{clickHit},
+            </if>
+            <if test="replyHit!=null">
+                replyHit=#{replyHit},
+            </if>
+            <if test="blogType.id!=null">
+                typeId=#{blogType.id},
+            </if>
+            <if test="keyword!=null and keyword!=''">
+                keyword=#{keyword},
+            </if>
+            <if test="status!=null">
+                status=#{status}
+            </if>
+        </set>
+        WHERE
+            id=#{id}
+    </update>
+
+    <delete id="deleteBlog" parameterType="integer">
+        DELETE FROM
+            m_blog
+        WHERE
+            id=#{id}
+    </delete>
+</mapper>

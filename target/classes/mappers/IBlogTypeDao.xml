@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.matrix.dao.IBlogTypeDao">
+
+    <resultMap id="blogType" type="blogType">
+        <id property="id" column="id"/>
+        <result property="typeName" column="typeName"/>
+        <result property="orderNo" column="orderNo"/>
+        <result property="articleCount" column="blogArticleCount"/>
+    </resultMap>
+
+    <select id="findAllType" resultMap="blogType">
+        SELECT
+            m2.id,
+            m2.typeName,
+            count(m1.id) AS blogArticleCount
+        FROM
+            m_blog m1
+        RIGHT JOIN
+            m_blogtype m2
+        ON
+            m2.id=m1.typeId
+        GROUP BY
+            m2.typeName
+        ORDER BY
+            m2.orderNo
+    </select>
+
+    <select id="findTypeById" parameterType="Integer" resultMap="blogType">
+        SELECT
+            *
+        FROM
+            m_blogtype
+        WHERE
+            id=#{typeId}
+    </select>
+
+    <select id="findTypeByMap" resultMap="blogType" parameterType="Map">
+        SELECT
+            *
+        FROM
+            m_blogtype
+        <if test="typeName!=null and typeName!=''">
+            WHERE typeName=#{typeName}
+        </if>
+        <if test="start!=null and size!=null">
+            LIMIT #{start},${size}
+        </if>
+    </select>
+
+    <select id="findCountOfTypeByMap" parameterType="map" resultType="long">
+        SELECT
+            count(*)
+        FROM
+            m_blogtype
+        <if test="typeName!=null and typeName!=''">
+            WHERE typeName=#{typeName}
+        </if>
+        <if test="start!=null and size!=null">
+            LIMIT #{start},${size}
+        </if>
+    </select>
+
+    <insert id="addType" parameterType="blogType">
+        INSERT INTO
+            m_blogtype(typeName,orderNo)
+        VALUES(#{typeName},#{orderNo})
+    </insert>
+
+    <update id="updateType" parameterType="blogType">
+        UPDATE
+            m_blogtype
+        <set>
+            <if test="typeName!=null and typeName!=''">
+                typeName=#{typeName},
+            </if>
+            <if test="orderNo!=null and orderNo!=''">
+                orderNo=#{orderNo}
+            </if>
+        </set>
+        WHERE
+            id=#{id}
+    </update>
+
+    <delete id="deleteType" parameterType="Integer">
+        DELETE FROM
+            m_blogtype
+        WHERE
+            id=#{typeId}
+    </delete>
+</mapper>
