@@ -43,7 +43,7 @@
 
             <!--导航-->
             <ul class="admin-navbar-nav fl">
-                <li class="active"><a href="/admin/index">博客首页</a></li>
+                <li class="active"><a href="${pageContext.request.contextPath}/pages/portal/index.html">博客首页</a></li>
                 <li><a href="/admin/nav1">管理</a></li>
                 <li><a href="/admin/nav2">友链</a></li>
             </ul>
@@ -51,9 +51,9 @@
             <!--右侧-->
             <ul class="admin-navbar-nav fr">
                 <li>
-                    <a href="javascript:;">欢迎您，管理员</a>
+                    <a href="javascript:">欢迎您，${currentUser.nickName}</a>
                     <ul class="dropdown-menu" style="right: 10px;">
-                        <li><a href="/admin/logout">退出当前账号</a></li>
+                        <li><a href="${pageContext.request.contextPath}/blogger/logout.do">退出当前账号</a></li>
                     </ul>
                 </li>
             </ul>
@@ -70,20 +70,20 @@
                     <div id="menu" class="menu">
                         <ul>
                             <li class="menu-item hover">
-                                <a href="javascript:page('iframe-page.html');">管理中心</a>
+                                <a href="${pageContext.request.contextPath}/pages/admin/home.jsp" target="page">管理中心</a>
                             </li>
                             <li class="menu-item">
                                 <a href="javascript:">个人中心<i class="icon-keyboard_arrow_left"></i></a>
                                 <ul>
-                                    <li><a href="javascript:page('/admin/user/avatar');">修改头像</a></li>
-                                    <li><a href="javascript:page('/admin/user/password');">修改密码</a></li>
+                                    <li><a href="${pageContext.request.contextPath}/pages/admin/blogger/bloggerInfoManager.jsp" target="page">修改用户信息</a></li>
+                                    <li><a href="${pageContext.request.contextPath}/pages/admin/blogger/verifyPasswordManager.jsp" target="page">修改密码</a></li>
                                 </ul>
                             </li>
                             <li class="menu-item">
                                 <a href="javascript:">评论管理<i class="icon-keyboard_arrow_left"></i></a>
                                 <ul>
-                                    <li><a href="${pageContext.request.contextPath}/pages/admin/blog_comment/blogCommentManager.jsp" target="page">评论审核</a></li>
-                                    <li><a href="${pageContext.request.contextPath}/pages/admin/blog_comment/blogCommentManager.jsp" target="page">评论列表</a></li>
+                                    <li><a href="${pageContext.request.contextPath}/pages/admin/blog_comment/blogCommentReviewManager.jsp" target="page">评论审核</a></li>
+                                    <li><a href="${pageContext.request.contextPath}/pages/admin/blog_comment/blogCommentManager.jsp" target="page">评论管理</a></li>
                                 </ul>
                             </li>
                             <li class="menu-item">
@@ -105,7 +105,7 @@
 
         <!--iframe载入内容-->
         <div class="admin-markdown">
-            <iframe name="page"></iframe>
+            <iframe name="page" src="home.jsp"></iframe>
         </div>
     </div>
     </body>

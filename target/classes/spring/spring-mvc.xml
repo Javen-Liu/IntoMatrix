@@ -18,6 +18,7 @@
 
     <!--处理静态资源-->
     <mvc:resources mapping="/static/**" location="/static/"/>
+    <mvc:resources mapping="/pages/portal/**" location="/pages/portal/"/>
 
 
     <!--视图解析器-->

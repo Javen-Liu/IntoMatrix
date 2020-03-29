@@ -23,4 +23,14 @@ public class BloggerServiceImpl implements IBloggerService {
     public Blogger findBloggerByUserName(String username) {
         return bloggerDao.findBloggerByUserName(username);
     }
+
+    @Override
+    public Blogger findBloggerByUserId(Integer userId) {
+        return bloggerDao.findBloggerByUserId(userId);
+    }
+
+    @Override
+    public Integer updateBlogger(Blogger blogger) {
+        return bloggerDao.updateBlogger(blogger);
+    }
 }

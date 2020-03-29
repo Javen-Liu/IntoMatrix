@@ -1,7 +1,6 @@
 package com.matrix.dao;
 
 import com.matrix.entity.Blog;
-import com.matrix.entity.BlogType;
 import com.sun.istack.internal.NotNull;
 
 import java.util.List;

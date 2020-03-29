@@ -12,7 +12,7 @@
         <result property="sign" column="sign"/>
         <result property="imageName" column="imageName"/>
     </resultMap>
-    
+
     <select id="findBloggerByUserName" parameterType="string" resultMap="blogger">
         SELECT
             *
@@ -21,4 +21,37 @@
         WHERE
             userName=#{username}
     </select>
+
+    <select id="findBloggerByUserId" resultMap="blogger">
+        SELECT
+            *
+        FROM
+            m_blogger
+        WHERE
+            id=#{userId}
+    </select>
+
+    <update id="updateBlogger" parameterType="blogger">
+        UPDATE
+            m_blogger
+        <set>
+            <if test="userName!=null and userName!=''">
+                userName=#{userName},
+            </if>
+            <if test="profile!=null and profile!=''">
+                profile=#{profile},
+            </if>
+            <if test="nickName!=null and nickName!=''">
+                nickName=#{nickName},
+            </if>
+            <if test="password!=null and password!=''">
+                password=#{password},
+            </if>
+            <if test="sign!=null and sign!=''">
+                sign=#{sign}
+            </if>
+        </set>
+        WHERE
+        id=#{id}
+    </update>
 </mapper>

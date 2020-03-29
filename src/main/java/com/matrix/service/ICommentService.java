@@ -60,4 +60,12 @@ public interface ICommentService {
      *         如果失败，则返回-1
      */
     Integer batchFail(String[] idArr);
+
+    /**
+     * 批量删除评论
+     * @param idArr 评论id数组
+     * @return 如果成功，返回1
+     *         如果失败，则返回-1
+     */
+    Integer batchDelete(String[] idArr);
 }

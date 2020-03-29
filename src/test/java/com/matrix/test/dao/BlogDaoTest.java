@@ -2,6 +2,7 @@ package com.matrix.test.dao;
 
 import com.matrix.dao.IBlogDao;
 import com.matrix.dao.IBlogTypeDao;
+import com.matrix.dao.ICommentDao;
 import com.matrix.entity.Blog;
 import com.matrix.entity.BlogType;
 import com.matrix.test.BaseTest;
@@ -29,6 +30,9 @@ public class BlogDaoTest extends BaseTest {
 
     @Resource
     private IBlogTypeDao blogTypeDao;
+
+    @Resource
+    private ICommentDao commentDao;
 
     @Test
     public void blogListTest(){
@@ -69,5 +73,15 @@ public class BlogDaoTest extends BaseTest {
         config.registerJsonValueProcessor(Date.class,new DateJsonValueProcessor("yyyy-MM-dd HH:mm:ss"));
         JSONObject object = JSONObject.fromObject(blog,config);
         System.out.println(object);
+    }
+
+    @Test
+    public void blogDeleteTest(){
+        try {
+            commentDao.deleteByBlogId(14);
+            blogDao.deleteBlog(14);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

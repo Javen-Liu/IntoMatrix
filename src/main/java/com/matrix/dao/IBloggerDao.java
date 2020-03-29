@@ -17,4 +17,19 @@ public interface IBloggerDao {
      * @return Blogger实体类对象
      */
     Blogger findBloggerByUserName(@Param("username") String username);
+
+    /**
+     * 通过userId用户id来查询Blogger实体类对象
+     * @param userId 用户id
+     * @return Blogger实体类对象
+     */
+    Blogger findBloggerByUserId(@Param("userId") Integer userId);
+
+    /**
+     * 更新用户信息
+     * @param blogger 用户实体类
+     * @return 如果更新成功，返回1
+     *         如果更新失败，则返回-1
+     */
+    Integer updateBlogger(Blogger blogger);
 }

@@ -93,4 +93,17 @@ public class CommentServiceImpl implements ICommentService {
         }
         return 1;
     }
+
+    @Override
+    public Integer batchDelete(String[] idArr) {
+        try{
+            for (String id : idArr) {
+                commentDao.delete(Integer.parseInt(id));
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            return -1;
+        }
+        return 1;
+    }
 }

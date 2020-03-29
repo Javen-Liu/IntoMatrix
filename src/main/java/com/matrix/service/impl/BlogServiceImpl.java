@@ -1,6 +1,7 @@
 package com.matrix.service.impl;
 
 import com.matrix.dao.IBlogDao;
+import com.matrix.dao.ICommentDao;
 import com.matrix.entity.Blog;
 import com.matrix.entity.BlogType;
 import com.matrix.service.IBlogService;
@@ -21,6 +22,9 @@ import java.util.Map;
 public class BlogServiceImpl implements IBlogService {
     @Resource
     private IBlogDao blogDao;
+
+    @Resource
+    private ICommentDao commentDao;
 
     @Override
     public List<Blog> findAllBlog() {
@@ -67,6 +71,7 @@ public class BlogServiceImpl implements IBlogService {
     @Override
     public Integer deleteBlog(Integer blogId) {
         try{
+            commentDao.deleteByBlogId(blogId);
             blogDao.deleteBlog(blogId);
         }catch (Exception e){
             e.printStackTrace();
@@ -109,6 +114,7 @@ public class BlogServiceImpl implements IBlogService {
     public Integer batchDelete(String[] idArr) {
         try{
             for (String id : idArr) {
+                commentDao.deleteByBlogId(Integer.parseInt(id));
                 blogDao.deleteBlog(Integer.parseInt(id));
             }
         }catch (Exception e){

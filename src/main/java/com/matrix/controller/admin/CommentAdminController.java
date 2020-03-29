@@ -76,4 +76,17 @@ public class CommentAdminController {
         }
         ResponseUtils.write(response, result);
     }
+
+    @RequestMapping("delete")
+    public void deleteComment(@RequestParam("idArr") String[] idArr,
+                              HttpServletResponse response) throws IOException {
+        Integer flag = commentService.batchDelete(idArr);
+        JSONObject result = new JSONObject();
+        if (flag > 0) {
+            result.put("success", Boolean.TRUE);
+        } else {
+            result.put("success", Boolean.FALSE);
+        }
+        ResponseUtils.write(response, result);
+    }
 }

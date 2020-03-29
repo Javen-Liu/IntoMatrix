@@ -51,4 +51,10 @@ public interface ICommentDao {
      * @param commentId 评论id
      */
     void delete(Integer commentId);
+
+    /**
+     * 根据博客id删除评论
+     * @param blogId 博客id
+     */
+    void deleteByBlogId(Integer blogId);
 }
