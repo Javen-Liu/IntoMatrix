@@ -43,8 +43,8 @@
 
             <!--导航-->
             <ul class="admin-navbar-nav fl">
-                <li class="active"><a href="${pageContext.request.contextPath}/pages/portal/index.html">博客首页</a></li>
-                <li><a href="/admin/nav1">管理</a></li>
+                <li class="active"><a href="${pageContext.request.contextPath}/index.do">博客首页</a></li>
+                <li><a href="${pageContext.request.contextPath}/pages/admin/main.jsp">管理</a></li>
                 <li><a href="/admin/nav2">友链</a></li>
             </ul>
 

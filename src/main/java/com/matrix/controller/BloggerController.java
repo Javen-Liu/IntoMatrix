@@ -126,6 +126,6 @@ public class BloggerController {
     @RequestMapping("/logout")
     public String logout(){
         SecurityUtils.getSubject().logout();
-        return "redirect:/pages/login.jsp";
+        return "login";
     }
 }
